@@ -96,6 +96,6 @@ label {
   margin-bottom: 20px !important;
 }
 
-.custom-input-group:has(.error-message) > label {
+.text-danger-label {
   color: #d71d1d;
 }
