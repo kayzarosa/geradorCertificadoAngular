@@ -12,11 +12,11 @@
     <h2 class="card-title ">Novo certificado</h2>
 
     <div class="mb-3 custom-input-group">
-      <label [ngClass]="{'text-danger-label': campoInvalido(nameRef)}" class="form-label">Nome</label>
-      <input [(ngModel)]="name" name="name" #nameRef="ngModel" maxlength="150" required type="text" id="name"
-        class="form-control custom-input" placeholder="Nome do aluno" />
+      <label [ngClass]="{'text-danger-label': invalidField(nameRef)}" class="form-label">Nome</label>
+      <input [(ngModel)]="certificate.name" name="name" #nameRef="ngModel" maxlength="150" required type="text"
+        id="name" class="form-control custom-input" placeholder="Nome do aluno" />
 
-      @if (campoInvalido(nameRef)) {
+      @if (invalidField(nameRef)) {
       <div class="error-message d-flex align-items-center">
         <i class="ph ph-warning-circle"></i>
         <p class="m-0">
@@ -28,43 +28,35 @@
 
     <div class="mb-3 d-flex align-items-end custom-input-group">
       <div class="flex-grow-1 me-2">
-        <label [ngClass]="{'text-danger-label': campoInvalido(activityRef)}" class="form-label">Atividade</label>
-        <input #activityRef="ngModel" name="activity" required maxlength="50" [(ngModel)]="activity" type="text"
-          id="atividade" class="form-control custom-input" placeholder="Atividade exercida" />
-
-        @if (campoInvalido(activityRef)) {
-        <div class="error-message d-flex align-items-center">
-          <i class="ph ph-warning-circle"></i>
-          <p class="m-0">
-            O nome da atividade é obrigatório.
-          </p>
-        </div>
-        }
+        <label class="form-label">Atividade</label>
+        <input #activityRef="ngModel" name="activity" maxlength="50" [(ngModel)]="activity" type="text" id="atividade"
+          class="form-control custom-input" placeholder="Atividade exercida" />
       </div>
 
-      <app-secondary-button
-        [ngStyle]="campoInvalido(activityRef) ? {'marginBottom': '26px'} : {}"></app-secondary-button>
+      <app-secondary-button (click)="addActivity()" textButton="Adicionar" phClass="ph ph-plus"
+        [disabled]="!activity || activity.length <= 0"></app-secondary-button>
     </div>
 
     <div class="atividade-group">
       <label class="form-label">Lista de atividades</label>
       <div class="item-list w-100">
-        @for (activity of listActivity; track $index) {
+        @for (activity of certificate.listActivities; track $index) {
         <div class="item">
           <span>
             {{activity}}
           </span>
-          <div class="remove-btn">
+          <div class="remove-btn" (click)="deleteActivity($index)">
             <i class="ph-bold ph-x"></i>
           </div>
         </div>
-        @if ($index + 1 != listActivity.length) {
+        @if ($index + 1 != certificate.listActivities.length) {
         <hr>
         }
         }
       </div>
     </div>
 
-    <app-primary-button></app-primary-button>
+    <app-primary-button (click)="submit()" [disabled]="!formValid()"
+      textButton="Gerar certificado"></app-primary-button>
   </div>
 </form>

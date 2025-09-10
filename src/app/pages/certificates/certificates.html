@@ -8,16 +8,23 @@
     </p>
   </div>
 
-  <!-- <div class="custom-card w-100">
+  @if (certificates.length == 0) {
+  <div class="custom-card w-100">
     <i class="ph ph-certificate"></i>
     <div class="custom-warning-titles">
       <h3 class="card-title ">Nenhum certificado gerado</h3>
       <p class="card-subtitle">Gere certrificados para consultar o histórico</p>
     </div>
-    <app-secondary-button></app-secondary-button>
-  </div> -->
-
-  <div class="list-certificates w-100">
-    <app-item-certificado></app-item-certificado>
+    <app-secondary-button routerLink="/certificado/novo" textButton="Gerar certificado"></app-secondary-button>
   </div>
+  }
+
+  @if (!certificates || certificates.length > 0) {
+  <div class="list-certificates w-100">
+    @for (certificate of certificates; track $index) {
+    <app-item-certificado [id]="certificate.id" [name]="certificate.name"
+      [dateOfIssue]="certificate.dateOfIssue"></app-item-certificado>
+    }
+  </div>
+  }
 </div>

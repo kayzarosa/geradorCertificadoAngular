@@ -2,12 +2,12 @@
   <div class="d-flex justify-content-between align-items-center">
     <div>
       <div class="fw-bold nome-aluno">
-        Nome do aluno
+        {{name}}
       </div>
       <small class="small-date">
-        Gerado em 06/09/2025
+        Gerado em {{dateOfIssue}}
       </small>
     </div>
-    <app-secondary-button (click)="redirectCertificado()"></app-secondary-button>
+    <app-secondary-button textButton="Ver" (click)="redirectCertificado()"></app-secondary-button>
   </div>
 </div>
